@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hero"><h1>What are you craving today?</h1><p>Search any dish, see the price, find the place.</p>
+<form method="get"><div class="search"><input name="q" value="{{ q }}" placeholder="🔍  kitfo, shiro, macchiato, Bole...">
+{% if ptype %}<input type="hidden" name="type" value="{{ ptype }}">{% endif %}<button>Search</button></div>
+<details class="f" {% if area or category or max_price %}open{% endif %}><summary>Filters</summary><div class="fl">
+<select name="area"><option value="">All areas</option>{% for a in areas %}<option {% if a == area %}selected{% endif %}>{{ a }}</option>{% endfor %}</select>
+<select name="category"><option value="">All food types</option>{% for c in categories %}<option {% if c == category %}selected{% endif %}>{{ c }}</option>{% endfor %}</select>
+<input name="max_price" type="number" value="{{ max_price }}" placeholder="Max price (birr)"></div></details></form></div>
+
+<div class="tiles"><a class="tile {% if not ptype %}on{% endif %}" href="{% url 'home' %}"><span>✨</span>All</a>
+{% for k, l, e in types %}<a class="tile {% if k == ptype %}on{% endif %}" href="?type={{ k }}"><span>{{ e }}</span>{{ l }}</a>{% endfor %}</div>
+
+{% if featured %}<h2>⭐ Featured</h2><div class="hs">{% for p in featured %}{% include "place_card.html" %}{% endfor %}</div>{% endif %}
+
+{% if dishes %}<h2>Dishes · cheapest first</h2>
+{% for d in dishes %}<a class="dish" href="{% url 'place_detail' d.place.slug %}"><div class="em">{{ d.place.emoji }}</div>
+<div class="g"><b>{{ d.name }}</b><br><span class="mut">{{ d.place.name }} · {{ d.place.area }}</span></div><div class="price">{{ d.price|floatformat:"-2" }} birr</div></a>{% endfor %}{% endif %}
+
+<h2>{% if searching %}Places{% else %}Explore places{% endif %}</h2>
+<div class="grid">{% for p in places %}{% include "place_card.html" %}{% empty %}<p class="mut">No places found. Try another search.</p>{% endfor %}</div>
+
+{% if not searching %}<div class="cta"><h2 style="margin-top:0">Own a café, restaurant or hotel?</h2><p>Get a free menu page and QR code in minutes.</p><a class="btn" href="{% url 'signup' %}">List your place free</a></div>{% endif %}
+{% endblock %}

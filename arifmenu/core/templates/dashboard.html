@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}<div class="row"><h1>My places</h1><a class="btn" href="{% url 'place_create' %}">+ Add place</a></div>
+{% for p in places %}<div class="card row"><div><b>{{ p.name }}</b> <span class="badge">{{ p.plan }}</span><br>
+<span class="mut">{% if p.is_active %}Live · {{ p.views }} views{% else %}Waiting for approval{% endif %}</span></div>
+<div><a class="btn alt" href="{% url 'place_detail' p.slug %}">View</a> <a class="btn" href="{% url 'manage_place' p.slug %}">Manage</a></div></div>
+{% empty %}<p class="mut">You have no places yet.</p>{% endfor %}{% endblock %}

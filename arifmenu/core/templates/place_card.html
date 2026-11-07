@@ -1,0 +1,4 @@
+<a class="pc" href="{% url 'place_detail' p.slug %}"><div class="im">{% if p.cover %}<img src="{{ p.cover.url }}" alt="" loading="lazy">{% else %}{{ p.emoji }}{% endif %}</div>
+<div class="bd"><b>{{ p.name }}</b> {% if p.is_featured %}<span class="badge">★</span>{% endif %}<br>
+<span class="chip">{{ p.get_place_type_display }}</span> <span class="mut">{{ p.area }}</span>
+{% if p.opening_hours %}<br><span class="mut">🕒 {{ p.opening_hours }}</span>{% endif %}</div></a>

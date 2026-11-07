@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Arif Menu · Find any dish, any place{% endblock %}</title>
+<meta name="description" content="{% block desc %}Search any dish, see the price, find the place.{% endblock %}">
+<style>
+:root{--bg:#f6f3ee;--fg:#1d1813;--card:#fff;--mut:#7a7066;--ac:#c2410c;--ac2:#fb923c;--bd:#ebe4da;--r:18px}
+@media(prefers-color-scheme:dark){:root{--bg:#12100e;--fg:#f4ede4;--card:#1d1916;--mut:#a59b90;--ac:#f97316;--ac2:#c2410c;--bd:#2f2924}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--fg);padding-bottom:72px}
+a{color:var(--ac)}.wrap{max-width:960px;margin:auto;padding:16px}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+header .in{max-width:960px;margin:auto;display:flex;align-items:center;gap:12px;padding:10px 16px}
+.logo{font-weight:800;font-size:20px;text-decoration:none;color:var(--fg);margin-right:auto}.logo b{color:var(--ac)}
+h1{font-size:clamp(26px,6vw,40px);line-height:1.1;margin:8px 0 14px;letter-spacing:-.02em}h2{font-size:20px;margin:26px 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin:10px 0}
+.btn,button{font:inherit;font-weight:600;background:var(--ac);color:#fff;border:0;border-radius:999px;padding:9px 18px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.alt{background:transparent;color:var(--ac);border:1.5px solid var(--ac)}.btn.sm{padding:6px 14px;font-size:14px}
+input,select,textarea{font:inherit;padding:11px 13px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--fg);max-width:100%}
+.mut{color:var(--mut);font-size:14px}.badge{background:var(--ac);color:#fff;border-radius:999px;font-size:11px;padding:2px 8px;font-weight:700;vertical-align:middle}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.price{font-weight:800;white-space:nowrap}.off{opacity:.5}
+.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:24px;padding:22px 18px;margin-top:6px}
+.hero h1{margin-top:0}.hero p{margin:0 0 14px;opacity:.92}
+.search{display:flex;gap:8px;background:var(--card);border-radius:16px;padding:6px}
+.search input{flex:1;border:0;background:transparent;min-width:0}.search input:focus{outline:0}
+details.f{margin-top:10px}details.f summary{cursor:pointer;font-weight:600}
+.fl{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.fl select,.fl input{flex:1;min-width:130px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:10px;margin:18px 0}
+.tile{background:var(--card);border:1px solid var(--bd);border-radius:16px;text-align:center;padding:12px 4px;text-decoration:none;color:var(--fg);font-size:14px;font-weight:600}
+.tile span{display:block;font-size:28px}.tile.on{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 12%,var(--card))}
+.hs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.hs .pc{flex:0 0 240px;scroll-snap-align:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;text-decoration:none;color:inherit;display:block;transition:transform .15s}
+.pc:hover{transform:translateY(-3px)}.pc .im{height:130px;background:linear-gradient(135deg,var(--ac2),var(--ac));display:grid;place-items:center;font-size:44px}
+.pc .im img{width:100%;height:100%;object-fit:cover}.pc .bd{padding:12px 14px}
+.chip{display:inline-block;background:color-mix(in srgb,var(--ac) 12%,var(--card));color:var(--ac);border-radius:999px;padding:3px 10px;font-size:13px;font-weight:600}
+.dish{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin:8px 0;text-decoration:none;color:inherit}
+.dish .em{font-size:24px}.dish .g{flex:1}
+.cta{background:var(--fg);color:var(--bg);border-radius:24px;padding:22px;margin:30px 0;text-align:center}.cta .btn{background:var(--ac2)}
+.msg{background:color-mix(in srgb,#16a34a 14%,var(--card));padding:10px 14px;border-radius:12px;margin:8px 0}
+.cover{height:200px;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,var(--ac2),var(--ac));display:grid;place-items:center;font-size:70px}.cover img{width:100%;height:100%;object-fit:cover}
+.tabs{position:sticky;top:53px;z-index:10;display:flex;gap:8px;overflow-x:auto;padding:10px 0;background:var(--bg)}.tabs a{white-space:nowrap;text-decoration:none;border:1px solid var(--bd);background:var(--card);padding:6px 14px;border-radius:999px;font-size:14px;color:var(--fg)}
+.mi{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}.mi .g{flex:1}.mi img{width:70px;height:70px;object-fit:cover;border-radius:12px}
+.tag{font-size:12px;color:#fff;background:#999;border-radius:6px;padding:1px 6px}
+nav.bot{position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;justify-content:space-around;background:var(--card);border-top:1px solid var(--bd);padding:8px 0 10px}
+nav.bot a{text-decoration:none;color:var(--mut);font-size:11px;text-align:center;font-weight:600}nav.bot a span{display:block;font-size:22px}
+form p{margin:12px 0}form label{display:block;font-size:14px;color:var(--mut);margin-bottom:4px}form input,form textarea,form select{width:100%}
+form input[type=checkbox]{width:auto}.helptext,.errorlist{font-size:13px;color:var(--mut)}.errorlist{color:#dc2626;padding-left:16px}
+@media(min-width:760px){body{padding-bottom:0}nav.bot{display:none}}
+</style></head><body>
+<header><div class="in"><a class="logo" href="{% url 'home' %}">Arif<b>Menu</b></a>
+{% if user.is_authenticated %}<a href="{% url 'dashboard' %}">My places</a>
+<form method="post" action="{% url 'logout' %}" style="margin:0">{% csrf_token %}<button class="btn alt sm">Log out</button></form>
+{% else %}<a href="{% url 'login' %}">Log in</a><a class="btn sm" href="{% url 'signup' %}">List your place</a>{% endif %}</div></header>
+<div class="wrap">{% for m in messages %}<div class="msg">{{ m }}</div>{% endfor %}{% block content %}{% endblock %}</div>
+<nav class="bot"><a href="{% url 'home' %}"><span>🏠</span>Home</a><a href="{% url 'home' %}?type=cafe"><span>☕</span>Cafés</a><a href="{% url 'home' %}?type=hotel"><span>🏨</span>Hotels</a>
+<a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}"><span>👤</span>{% if user.is_authenticated %}Mine{% else %}Log in{% endif %}</a></nav>
+</body></html>

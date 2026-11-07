@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ place.name }} menu · Arif Menu{% endblock %}
+{% block desc %}{{ place.name }} in {{ place.area }}: menu and prices.{% endblock %}
+{% block content %}
+{% if not place.is_active %}<div class="msg">Preview only: waiting for admin approval.</div>{% endif %}
+<div class="cover">{% if place.cover %}<img src="{{ place.cover.url }}" alt="{{ place.name }}">{% else %}{{ place.emoji }}{% endif %}</div>
+<h1 style="margin-top:14px">{{ place.name }} {% if place.is_featured %}<span class="badge">Featured</span>{% endif %}</h1>
+<span class="chip">{{ place.emoji }} {{ place.get_place_type_display }}</span> <span class="chip">📍 {{ place.area }}</span>
+{% if place.opening_hours %}<span class="chip">🕒 {{ place.opening_hours }}</span>{% endif %}
+{% if place.description %}<p class="mut">{{ place.description }}</p>{% endif %}
+{% if place.address %}<p class="mut">{{ place.address }}</p>{% endif %}
+<div class="row" style="justify-content:flex-start;margin:12px 0">
+{% if place.phone %}<a class="btn" href="tel:{{ place.phone }}">📞 Call</a>{% endif %}
+{% if place.latitude and place.longitude %}<a class="btn alt" href="https://www.openstreetmap.org/?mlat={{ place.latitude }}&mlon={{ place.longitude }}#map=17/{{ place.latitude }}/{{ place.longitude }}">🗺 Map</a>{% endif %}
+<button class="btn alt" type="button" onclick="if(navigator.share){navigator.share({title:'{{ place.name|escapejs }}',url:location.href})}else{navigator.clipboard.writeText(location.href);this.textContent='Link copied'}">Share</button></div>
+{% if grouped %}<div class="tabs">{% for cat in grouped %}<a href="#c{{ forloop.counter }}">{{ cat }}</a>{% endfor %}</div>{% endif %}
+{% for cat, items in grouped.items %}<h2 id="c{{ forloop.counter }}" style="scroll-margin-top:110px">{{ cat }}</h2>
+{% for it in items %}<div class="mi"><div class="g {% if not it.is_available %}off{% endif %}"><b>{{ it.name }}</b>
+{% if not it.is_available %}<span class="tag">Sold out</span>{% endif %}{% if it.description %}<br><span class="mut">{{ it.description }}</span>{% endif %}<br><span class="price">{{ it.price|floatformat:"-2" }} birr</span></div>
+{% if it.photo %}<img src="{{ it.photo.url }}" alt="" loading="lazy">{% endif %}</div>{% endfor %}
+{% empty %}<p class="mut">Menu coming soon.</p>{% endfor %}
+<p class="mut" style="text-align:center;margin-top:30px">Menu by <a href="{% url 'home' %}">Arif Menu</a></p>
+{% endblock %}

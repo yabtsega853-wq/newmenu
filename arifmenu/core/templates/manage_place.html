@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row"><h1>{{ place.name }}</h1><a class="btn alt" href="{% url 'place_detail' place.slug %}">View page</a></div>
+<div class="card row"><div><b>Your QR code</b><br><span class="mut">Print it and put it on your tables.</span><br>
+<a href="{% url 'place_qr' place.slug %}?download=1">Download QR (SVG)</a></div>
+<img src="{% url 'place_qr' place.slug %}" alt="QR" width="120" height="120"></div>
+<div class="row"><h2>Menu items</h2><a class="btn" href="{% url 'item_new' place.slug %}">+ Add item</a></div>
+{% for it in items %}<div class="card row"><div class="{% if not it.is_available %}off{% endif %}"><b>{{ it.name }}</b>
+<span class="mut">· {{ it.category }}</span></div>
+<div class="row"><span class="price">{{ it.price|floatformat:"-2" }} birr</span>
+<form method="post" action="{% url 'item_toggle' place.slug it.pk %}" style="margin:0">{% csrf_token %}<button class="btn alt">{% if it.is_available %}Mark sold out{% else %}Mark available{% endif %}</button></form>
+<a class="btn alt" href="{% url 'item_edit' place.slug it.pk %}">Edit</a>
+<form method="post" action="{% url 'item_delete' place.slug it.pk %}" style="margin:0" onsubmit="return confirm('Delete?')">{% csrf_token %}<button class="btn alt">Delete</button></form></div></div>
+{% empty %}<p class="mut">No items yet. Add dishes as text so customers can search them.</p>{% endfor %}
+<h2>Place details</h2>
+<form method="post" enctype="multipart/form-data" class="card">{% csrf_token %}{{ form.as_p }}<button>Save details</button></form>
+{% endblock %}

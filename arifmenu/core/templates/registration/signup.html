@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width:420px;margin:20px auto">
+<h1>Open your free menu page</h1>
+<p class="mut">Takes about 1 minute. No payment needed.</p>
+<form method="post" class="card" style="padding:20px">{% csrf_token %}
+{% for f in form %}<p><label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<span class="errorlist">{{ e }}</span><br>{% endfor %}</p>{% endfor %}
+<button style="width:100%;padding:13px">Create my account</button></form>
+<p class="mut" style="text-align:center">Already have an account? <a href="{% url 'login' %}">Log in</a></p></div>
+{% endblock %}
